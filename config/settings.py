@@ -91,17 +91,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': "my_comments_db",
-        "USER": "my_comments_db_user",
-        "HOST": "postgres://my_comments_db_user:lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2@dpg-cno9q1i0si5c73b3h88g-a.oregon-postgres.render.com/my_comments_db",
-        "PORT": "5432",
-        "PASSWORD": "lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2",
+        'NAME': BASE_DIR/ "db.sqlite3",
+
     }
 }
 
-url = 'postgres://my_comments_db_user:lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2@dpg-cno9q1i0si5c73b3h88g-a.oregon-postgres.render.com/my_comments_db'
-database_url = os.environ.get('DATABASE_URL', url)
-DATABASES['default'] = dj_database_url.parse(database_url)
+# url = 'postgres://my_comments_db_user:lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2@dpg-cno9q1i0si5c73b3h88g-a.oregon-postgres.render.com/my_comments_db'
+# database_url = os.environ.get('DATABASE_URL', url)
+# DATABASES['default'] = dj_database_url.parse(database_url)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -139,7 +136,7 @@ LOGOUT_REDIRECT_URL = "index"
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR / 'static')
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR]
 
 MEDIA_URL = '/media/'  # new
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # new
