@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,14 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--c-4a_xoz_4(^onhxs2ac=sqf3&_ukcc*9t7qv=4veb7al(vy#'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-(&a9g)l$6c4s@ea(hcubipuww3n#be%uawi$k^h_-pkg_mtj#w')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
-
-# Application definition
+HOSTS = os.environ.get('ALLOWED_HOSTS')
+ALLOWED_HOSTS = HOSTS.split(' ') if HOSTS else []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,10 +60,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = (
-    "http://localhost:3000",
-    "http://localhost:8000",
-)
+# CORS_ALLOWED_ORIGINS = (
+#     "http://localhost:3000",
+#     "http://localhost:8000",
+# )
 
 ROOT_URLCONF = 'config.urls'
 
@@ -94,6 +95,10 @@ DATABASES = {
     }
 }
 
+url = 'postgres://my_comments_db_user:lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2@dpg-cno9q1i0si5c73b3h88g-a/my_comments_db'
+database_url = os.environ.get('DATABASE_URL', url)
+DATABASES['default'] = dj_database_url.parse(database_url)
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -115,6 +120,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 1025
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'abduxamidikramov@gmail.com'
+EMAIL_HOST_PASSWORD = 'abduxamid664'
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -126,7 +138,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+LOGIN_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "index"
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR / 'static')
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+MEDIA_URL = '/media/'  # new
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
