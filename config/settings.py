@@ -138,7 +138,6 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR / 'static')
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'  # new
