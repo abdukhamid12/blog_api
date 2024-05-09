@@ -91,11 +91,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': "my_comments_db",
+        "USER": "my_comments_db_user",
+        "HOST": "dpg-cno9q1i0si5c73b3h88g-a",
+        "PORT": "5432",
+        "PASSWORD": "lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2",
     }
 }
 
-url = 'postgres://my_comments_db_user:lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2@dpg-cno9q1i0si5c73b3h88g-a/my_comments_db'
+url = 'postgres://my_comments_db_user:lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2@dpg-cno9q1i0si5c73b3h88g-a.oregon-postgres.render.com/my_comments_db'
 database_url = os.environ.get('DATABASE_URL', url)
 DATABASES['default'] = dj_database_url.parse(database_url)
 
@@ -119,14 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_HOST = "localhost"
-EMAIL_PORT = 1025
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'abduxamidikramov@gmail.com'
-EMAIL_HOST_PASSWORD = 'abduxamid664'
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
