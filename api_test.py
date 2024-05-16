@@ -3,7 +3,7 @@ from pprint import pp
 
 import requests
 
-url = 'https://blog-api-1-e1yr.onrender.com/api/v1/posts/'
+url = 'https://blog-api-3s1k.onrender.com/api/v1/posts/'
 # put_url = "http://127.0.0.1:8000/api/v1/posts/11/"
 # delete_url = "http://127.0.0.1:8000/api/v1/posts/4/"
 # patch_url = "http://127.0.0.1:8000/api/v1/posts/11/"
