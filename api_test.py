@@ -3,7 +3,7 @@ from pprint import pp
 
 import requests
 
-url = 'http://127.0.0.1:8000/api/v1/posts/'
+url = 'https://blog-api-1-e1yr.onrender.com/api/v1/posts/'
 # put_url = "http://127.0.0.1:8000/api/v1/posts/11/"
 # delete_url = "http://127.0.0.1:8000/api/v1/posts/4/"
 # patch_url = "http://127.0.0.1:8000/api/v1/posts/11/"
@@ -21,7 +21,7 @@ headers = {
 }
 
 def get_all_posts():
-  response = requests.request("GET", url, headers=headers, data=payload)
+  response = requests.request("GET", url, headers=headers)
   data = json.loads(response.text)
   return data
 
