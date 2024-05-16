@@ -101,11 +101,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': "my_comments_db",
-        "USER": "my_comments_db_user",
-        "PASSWORD": "lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2",
-        "HOST": "postgres://my_comments_db_user:lCmqD9rbSXFahHKyk6hard5Ek2kgXpm2@dpg-cno9q1i0si5c73b3h88g-a.oregon-postgres.render.com/my_comments_db",
-        "PORT": 5432
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
 
