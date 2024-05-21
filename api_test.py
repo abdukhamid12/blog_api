@@ -1,29 +1,29 @@
-import json
-from pprint import pp
-
 import requests
+import json
 
-url = 'https://blog-api-3s1k.onrender.com/api/v1/posts/'
-# put_url = "http://127.0.0.1:8000/api/v1/posts/11/"
-# delete_url = "http://127.0.0.1:8000/api/v1/posts/4/"
-# patch_url = "http://127.0.0.1:8000/api/v1/posts/11/"
+url = "https://blog-api-1-e1yr.onrender.com/api/v1/posts/"
+url_for_users = "https://blog-api-1-e1yr.onrender.com/api/v1/users/"
 
-# payload = {
-#     "title": "Smoke_BackEnd",
-#     "content": "Abdukhamid1",
-#     "created": "2024-05-02T12:47:55.214779Z",
-#     "updated": "2024-05-02T12:47:55.214779Z",
-#     "is_published": True,
-# }
+payload = ""
 headers = {
-  'Authorization': 'Basic cm9vdDoxMjM0',
-  'Cookie': 'csrftoken=7JtGQzRdCnwS5tFFqeMNspVoGpyaVPZF'
+  'Content-Type': 'application/json',
+  'Authorization': 'Basic eG9taWQ6MTIzNA=='
 }
 
+
+
 def get_all_posts():
-  response = requests.request("GET", url, headers=headers)
-  data = json.loads(response.text)
-  return data
+  try:
+    response = requests.request("GET", url, headers=headers, data=payload)
+    my_json = json.loads(response.text)
+    return my_json
+  except Exception as e:
+    return [{"title": "Nice Try!", "content": "Ma'lumot qo'shing"}]
+
+def get_all_users():
+    response = requests.request("GET", url_for_users, headers=headers, data=payload)
+    my_json = json.loads(response.text)
+    return my_json
 
 # def put_post():
 #   response = requests.request("PUT", put_url, headers=headers, data=payload)

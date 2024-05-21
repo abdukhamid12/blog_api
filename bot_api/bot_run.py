@@ -8,37 +8,63 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
-
 from api_test import *
 
 # Bot token can be obtained via https://t.me/BotFather
 TOKEN = "7058792123:AAFEGbCT-9xnv28n5J3sADjZrJk4ZJm2v6U"
 
-# All handlers should be attached to the Router (or Dispatcher)
 dp = Dispatcher()
 
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
-    """
-    This handler receives messages with `/start` command
-    """
-    # Most event objects have aliases for API methods that can be called in events' context
-    # For example if you want to answer to incoming message you can use `message.answer(...)` alias
-    # and the target chat will be passed to :ref:`aiogram.methods.send_message.SendMessage`
-    # method automatically or call API method directly via
-    # Bot instance: `bot.send_message(chat_id=message.chat.id, ...)`
     await message.answer(f"Hello, {html.bold(message.from_user.full_name)}!")
 
+
 @dp.message(Command('posts'))
-async def posts(message:Message) -> None:
-    all_posts = get_all_posts()
-    await message.answer(f"{all_posts}")
+async def posts_handler(message: Message) -> None:
+    try:
+        datas = get_all_posts()
+        # logging.info(datas)
+        # logging.info(type(datas))
+        if datas:
+            for data in datas:
+                text = (f"title: {data['title']}\n"
+                        f"content: {data['content']}\n"
+                        f"rasm: <a href='{data['image']}'>Rasm</a>\n")
+
+                if data['image']:
+                    await message.answer_photo(photo=data['image'], caption=text)
+                else:
+                    await message.answer(text)
+        else:
+            await message.answer("Ma'lumot kiriting: ")
+    except ConnectionError as e:
+        await message.answer("Nice Try! ")
+
+@dp.message(Command("users"))
+async def users_handler(message: Message) -> None:
+    try:
+        datas = get_all_users()
+
+        if datas:
+            for data in datas:
+                text = (
+                    f"url: {data['url']}\n"
+                    f"username: {data['username']}\n"
+                    f"email: {data['email']}\n"
+                    f"is_staff: {data['is_staff']}\n"
+                    f"is_active: {data['is_active']}\n"
+                    f"is_superuser: {data['is_superuser']}\n")
+                await message.answer(text)
+        else:
+            await message.answer("Malumot kiriting: ")
+    except ConnectionError as e:
+        await message.answer("Nice try !")
+
 
 async def main() -> None:
-    # Initialize Bot instance with default bot properties which will be passed to all API calls
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    # And the run events dispatching
     await dp.start_polling(bot)
 
 
