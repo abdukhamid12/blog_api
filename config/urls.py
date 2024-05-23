@@ -1,4 +1,5 @@
 """
+
 URL configuration for config project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,11 +19,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
-from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
 from config import settings
+
 
 class CustomAuthToken(ObtainAuthToken):
 
@@ -38,12 +40,13 @@ class CustomAuthToken(ObtainAuthToken):
             'email': user.email
         })
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/v1/', include('blog.urls')),  # new
-    path('api-token-auth/', views.obtain_auth_token), #new
-    path('api-token-auth/', CustomAuthToken.as_view()), #new
+    # path('api-token-auth/', views.obtain_auth_token),  # new
+    # path('api-token-auth/', CustomAuthToken.as_view())  # new
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # new
